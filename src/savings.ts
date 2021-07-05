@@ -1,18 +1,18 @@
 import { getDemandOfTour, evaluateTour } from './evaluation';
 import { Instance, Solution } from './types';
 
+interface Saving {
+    saving: number;
+    frontTour: number;
+    backTour: number;
+  }
+
 export function createStartSolution(instance: Instance): Solution {
   const startTours: Solution = [];
   for (let i = 2; i <= instance.n; i++) {
     startTours.push([i]);
   }
   return startTours;
-}
-
-interface Saving {
-  saving: number;
-  frontTour: number;
-  backTour: number;
 }
 
 export function createNewSolutionFromSaving(saving: Saving, currentSolution: Solution): Solution {
@@ -51,9 +51,9 @@ export function savings(instance: Instance): Solution {
     });
 
     if (savings.length) {
-      const sorted = savings.sort((a, b) => a.saving - b.saving);
-      const best = sorted[0];
-      betterSolution = createNewSolutionFromSaving(best, currentSolution);
+      const sortedSavings = savings.sort((a, b) => a.saving - b.saving);
+      const bestSaving = sortedSavings[0];
+      betterSolution = createNewSolutionFromSaving(bestSaving, currentSolution);
     }
   }
   return currentSolution;
